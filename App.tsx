@@ -39,18 +39,7 @@ const App: React.FC = () => {
     }
   }, [mobileMenuOpen]);
 
-
   const t = (ar: string, fr: string) => (lang === 'ar' ? ar : fr);
-
-  // Helper to handle assets paths on GitHub Pages
-  const getAssetPath = (path: string) => {
-    // Remove leading slash if present
-    const cleanPath = path.startsWith('/') ? path.slice(1) : path;
-    // In production (GitHub Pages), prepend the base URL
-    return import.meta.env.PROD
-      ? `/gsAloumrane_site/${cleanPath}`
-      : `/${cleanPath}`;
-  };
 
   const navigateTo = (view: View) => {
     setCurrentView(view);
@@ -73,66 +62,64 @@ const App: React.FC = () => {
         <Orbs />
         <div className="container mx-auto px-6 lg:px-12 relative z-10">
           <div className="grid lg:grid-cols-12 gap-16 items-center">
-            <div className={`lg:col-span-7 space-y-12 text-center lg:text-${lang === 'ar' ? 'right' : 'left'}`}>
-              <div className="inline-flex items-center gap-3 px-6 py-3 bg-white/80 backdrop-blur-md rounded-full shadow-md border border-slate-100 animate-slide-in">
-                <span className="w-3 h-3 bg-green-500 rounded-full animate-pulse" />
-                <span className="text-slate-600 font-bold text-xs uppercase tracking-wider">{t('التسجيلات مفتوحة 2025-2026', 'Inscriptions Ouvertes 2025-2026')}</span>
+            <div className="lg:col-span-7 space-y-12">
+              <div className="inline-flex items-center gap-3 px-6 py-2.5 bg-white/80 backdrop-blur-xl rounded-full border border-slate-200 text-[#0f172a] text-[11px] font-black uppercase tracking-[0.2em] shadow-sm">
+                <div className="w-2 h-2 bg-[#f97316] rounded-full animate-ping" />
+                {t('الريادة في التعليم الخاص بالدار البيضاء', 'Leader de l\'Enseignement Privé à Casablanca')}
               </div>
-              <h1 className="text-6xl lg:text-8xl font-black text-[#0f172a] leading-[1.1] tracking-tighter">
-                {t('نصنع قادة', 'Forger les')} <br />
-                <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#f97316] to-orange-500">{t('المستقبل', 'Leaders de Demain')}</span>
+              <h1 className="text-7xl lg:text-[105px] font-black leading-[0.9] tracking-tighter text-[#0f172a]">
+                {t('مستقبلهم ', 'Leur Futur ')}<br />
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#f97316] to-[#ea580c]">{t('يبدأ من هنا', 'Commence Ici')}</span>
               </h1>
-              <p className="text-xl lg:text-2xl text-slate-500 font-medium leading-relaxed max-w-2xl">
-                {t('تعليم متميز يجمع بين الأصالة والمعاصرة، لبناء جيل مبدع ومسؤول.', 'Une éducation d\'excellence alliant tradition et modernité pour former une génération créative.')}
+              <p className="text-2xl text-slate-500 max-w-xl leading-relaxed font-medium">
+                {t('نحن لا نقدم مجرد دروس، بل نصمم تجربة تعليمية فريدة تهدف لبناء قادة الغد بمهارات عالمية وقيم أصيلة.', 'Bien plus qu\'une école, nous forgeons les leaders de demain avec une excellence académique et des valeurs fortes.')}
               </p>
-              <div className={`flex flex-wrap gap-6 justify-center lg:justify-${lang === 'ar' ? 'start' : 'end'}`}>
-                <button onClick={() => navigateTo('admissions')} className="group px-10 py-5 bg-[#0f172a] text-white rounded-full font-black text-lg transition-all hover:bg-[#f97316] hover:scale-105 shadow-luxury flex items-center gap-3">
-                  <span>{t('سجّل الآن', 'S\'inscrire')}</span>
-                  <ArrowRight className={`transition-transform group-hover:translate-x-1 ${lang === 'ar' ? 'rotate-180' : ''}`} />
+              <div className="flex flex-wrap gap-6 pt-6">
+                <button
+                  onClick={() => navigateTo('admissions')}
+                  className="group bg-[#0f172a] text-white px-12 py-6 rounded-[2rem] font-black text-xl shadow-luxury hover:scale-105 active:scale-95 transition-all flex items-center gap-4 overflow-hidden relative"
+                >
+                  <span className="relative z-10">{t('سجل الآن', 'S\'inscrire')}</span>
+                  <ArrowUpRight size={22} className="relative z-10 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
+                  <div className="absolute inset-0 bg-[#f97316] translate-y-full group-hover:translate-y-0 transition-transform duration-500" />
                 </button>
-                <button onClick={() => navigateTo('contact')} className="px-10 py-5 bg-white text-[#0f172a] border-2 border-slate-100 rounded-full font-black text-lg hover:bg-slate-50 transition-all flex items-center gap-3">
-                  <Play size={20} className="fill-[#0f172a]" />
-                  <span>{t('جولة افتراضية', 'Visite Virtuelle')}</span>
+                <button
+                  onClick={() => setIsTourOpen(true)}
+                  className="px-12 py-6 rounded-[2rem] font-black text-xl border-2 border-slate-200 bg-white/50 backdrop-blur-md hover:bg-slate-50 transition-all flex items-center gap-4 group"
+                >
+                  {t('جولة افتراضية', 'Tour Virtuel')}
+                  <Play size={20} className="text-[#f97316] group-hover:scale-125 transition-transform" fill="currentColor" />
                 </button>
               </div>
             </div>
+
             <div className="lg:col-span-5 relative">
-              {/* Floating Elements */}
-              <div className="absolute top-10 -left-10 z-20 bg-white p-5 rounded-3xl shadow-luxury animate-bounce-slow hidden lg:block">
-                <div className="flex items-center gap-4">
-                  <div className="w-12 h-12 bg-orange-100 rounded-full flex items-center justify-center text-orange-600 font-black">
-                    <GraduationCap size={24} />
-                  </div>
-                  <div>
-                    <p className="text-xs text-slate-400 font-bold uppercase">{t('نسبة النجاح', 'Réussite')}</p>
-                    <p className="text-xl font-black text-[#0f172a]">100%</p>
-                  </div>
-                </div>
+              <div className="absolute -top-12 -left-12 bg-white w-52 h-52 rounded-full shadow-luxury z-30 flex flex-col items-center justify-center border-[12px] border-orange-50 animate-reveal">
+                <span className="text-7xl font-black text-[#f97316] leading-none">+25</span>
+                <span className="text-[10px] font-black text-slate-400 uppercase tracking-widest mt-2 text-center px-4">
+                  {t('سنة من التميز الأكاديمي', 'Ans d\'Excellence')}
+                </span>
+                <div className="absolute -inset-1 rounded-full border-2 border-dashed border-[#f97316]/20 animate-[spin_10s_linear_infinite]" />
               </div>
 
               <div className="relative z-10 rounded-[6rem] overflow-hidden shadow-luxury border-[15px] border-white aspect-[4/5] animate-floating">
-                {/* Parallax Image Effect */}
-                <div className="absolute inset-0 bg-cover bg-center transition-transform duration-1000 transform hover:scale-110" style={{ backgroundImage: `url(${getAssetPath('images/gsAloumrane.png')})` }}></div>
+                <img src="/images/gsAloumrane.png" className="w-full h-full object-cover" alt={t('مجموعة مدارس العمران', 'Groupe Scolaire Al Oumrane')} />
                 <div className="absolute inset-0 bg-gradient-to-t from-[#0f172a]/40 to-transparent" />
+              </div>
+
+              <div className="absolute -bottom-10 -right-10 bg-[#0f172a] p-10 rounded-[3.5rem] shadow-luxury z-20 border border-white/10 animate-reveal delay-500">
+                <div className="flex items-center gap-4 mb-3">
+                  <div className="w-12 h-12 bg-[#f97316] rounded-xl flex items-center justify-center text-white">
+                    <Trophy size={24} />
+                  </div>
+                  <span className="text-4xl font-black text-white">100%</span>
+                </div>
+                <p className="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em]">{t('نسبة النجاح في الباكالوريا', 'Réussite au BAC')}</p>
               </div>
             </div>
           </div>
         </div>
       </section>
-
-      {/* Marquee Announcement Bar */}
-      <div className="bg-[#f97316] py-3 overflow-hidden relative z-20 shadow-lg -rotate-1 transform origin-left scale-105">
-        <div className="animate-marquee whitespace-nowrap flex gap-12 text-white font-black text-sm uppercase tracking-widest items-center">
-          {[...Array(6)].map((_, i) => (
-            <React.Fragment key={i}>
-              <span>{t('⭐ التسجيلات مفتوحة للموسم الدراسي 2025-2026', '⭐ INSCRIPTIONS OUVERTES 2025-2026')}</span>
-              <span className="w-2 h-2 bg-white rounded-full"></span>
-              <span>{t('🚀 تعليم متميز ومرافق حديثة', '🚀 ÉDUCATION D\'EXCELLENCE')}</span>
-              <span className="w-2 h-2 bg-white rounded-full"></span>
-            </React.Fragment>
-          ))}
-        </div>
-      </div>
 
       {/* LUXURY STATS SECTION */}
       <section className="py-24 relative overflow-hidden">
@@ -704,7 +691,7 @@ const App: React.FC = () => {
 
           {/* Logo & Name Section - Always first in DOM, positioned by flex direction */}
           <div className={`flex items-center gap-4 cursor-pointer ${lang === 'ar' ? 'flex-row-reverse' : 'flex-row'}`} onClick={() => navigateTo('home')}>
-            <img src={getAssetPath('images/logo.png')} alt={t('شعار مجموعة مدارس العمران', 'Logo Al Oumrane')} className="w-12 h-12 lg:w-14 lg:h-14 rounded-2xl object-contain shadow-lg" />
+            <img src="/images/logo.png" alt={t('شعار مجموعة مدارس العمران', 'Logo Al Oumrane')} className="w-12 h-12 lg:w-14 lg:h-14 rounded-2xl object-contain shadow-lg" />
             <div className={`flex flex-col ${lang === 'ar' ? 'text-right' : 'text-left'}`}>
               <h1 className="font-black text-xl lg:text-2xl tracking-tighter text-[#0f172a] leading-none uppercase">{t('العمران', 'AL OUMRANE')}</h1>
               <span className="text-[9px] font-bold text-[#f97316] uppercase tracking-[0.2em] mt-0.5">{t('مجموعة مدارس', 'Groupe Scolaire')}</span>
@@ -747,7 +734,7 @@ const App: React.FC = () => {
               <X size={28} />
             </button>
             <div className={`flex items-center gap-3 ${lang === 'ar' ? 'flex-row-reverse' : 'flex-row'}`}>
-              <img src={getAssetPath('images/logo.png')} alt="Logo" className="w-12 h-12 rounded-xl object-contain" />
+              <img src="/images/logo.png" alt="Logo" className="w-12 h-12 rounded-xl object-contain" />
               <div className={`${lang === 'ar' ? 'text-right' : 'text-left'}`}>
                 <div className="text-white font-black text-xl tracking-tighter uppercase">{t('العمران', 'AL OUMRANE')}</div>
                 <div className="text-[#f97316] text-[9px] font-bold uppercase tracking-widest">{t('مجموعة مدارس', 'Groupe Scolaire')}</div>
@@ -794,7 +781,7 @@ const App: React.FC = () => {
             {/* Logo & Description */}
             <div className="lg:col-span-1">
               <div className="flex items-center gap-4 mb-6">
-                <img src={getAssetPath('images/logo.png')} alt="Logo" className="w-16 h-16 rounded-2xl object-contain bg-white/10 p-2" />
+                <img src="/images/logo.png" alt="Logo" className="w-16 h-16 rounded-2xl object-contain bg-white/10 p-2" />
                 <div>
                   <h3 className="font-black text-2xl tracking-tighter uppercase">{t('العمران', 'AL OUMRANE')}</h3>
                   <span className="text-[#f97316] text-xs font-bold uppercase tracking-widest">{t('التميز', 'Excellence')}</span>
